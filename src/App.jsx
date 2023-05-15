@@ -3,7 +3,7 @@ import {Routes, Route} from "react-router-dom";
 
 // Подключаем компоненты
 import Modal from "./components/Modal";
-import {Header, Footer} from "./components/General"; // index.jsx
+import {Header, Footer} from "./components/General";
 
 // Подключаем странички
 import Home from "./pages/Home";

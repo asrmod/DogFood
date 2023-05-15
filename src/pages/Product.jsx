@@ -13,7 +13,6 @@ const Product = () => {
 		})
 			.then(res => res.json())
 			.then(serverData => {
-				console.log(id, serverData);
 				setData(serverData);
 			})
 	}, [])
