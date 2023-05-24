@@ -4,16 +4,14 @@ import {
     BalloonHeart, 
     Cart4, 
     PersonCircle, 
-    BuildingUp, 
+    BuildingUp
 } from "react-bootstrap-icons";
 
 import Search from "../Search";
 const Header = ({
-        user, 
-        upd, 
+        user,
         searchArr,
-        setGoods, 
-        setSearchResult,
+        setGoods,
         setModalOpen
     }) => {
     const login = () => {
@@ -24,16 +22,15 @@ const Header = ({
         <div className="search-block">
             <Search 
                 data={searchArr} 
-                setGoods={setGoods} 
-                setSearchResult={setSearchResult}
+                setGoods={setGoods}
             />
         </div>
         <nav className="header__menu">
             {user && <>
-                <Link to="/">
+                <Link to="/favorites">
                     <BalloonHeart title="Избранное"/>
                 </Link>
-                <Link to="/">
+                <Link to="/cart">
                     <Cart4  title="Корзина"/>
                 </Link>
                 <Link to="/profile">

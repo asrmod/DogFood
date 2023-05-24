@@ -1,0 +1,14 @@
+.box {
+    display: flex;
+    width: 100%;
+    background-color: yellow;
+    padding: 20px;
+  }
+  .box-text {
+    max-width: 425px;
+  }
+
+  @media (min-width: 576px) {
+    .box{
+        width: auto;
+    }}

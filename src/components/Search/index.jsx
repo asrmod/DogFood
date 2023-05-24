@@ -1,18 +1,17 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import {useNavigate} from "react-router-dom";
+import Ctx from "../../ctx";
 import "./style.css";
 
-const Search = ({data, setGoods, setSearchResult}) => {
-const navigate = useNavigate();
-const [text, setText] = useState("");
-const [num, setNum] = useState(0);
-const changeValue = (e) => {
+const Search = () => {
+	const { setSearchResult, baseData, setGoods } = useContext(Ctx);
+	const navigate = useNavigate();
+	const [text, setText] = useState("");
+	const [num, setNum] = useState(0);
+	const changeValue = (e) => {
 		navigate("/catalog");
 		let val = e.target.value.toLowerCase();
 		setText(val);
-	}
-	const changeText = () => {
-		setText("Привет!");
 	}
 	useEffect(() => {
 		let str = '';
@@ -26,35 +25,13 @@ const changeValue = (e) => {
 		setSearchResult(str);
 	}, [num, text]);
 	useEffect(() => {
-		let result = data.filter(el => el.name.toLowerCase().includes(text));
+		let result = baseData.filter(el => el.name.toLowerCase().includes(text));
 		setGoods(result);
 		setNum(result.length);
-	}, [text]);
+	}, [text, baseData]);
 	return <>
 		<input className="search" type="search" value={text} onChange={changeValue}/>
 	</>
 }
 
 export default Search;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

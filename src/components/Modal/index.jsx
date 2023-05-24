@@ -44,7 +44,6 @@ const Modal = ({
 			body: JSON.stringify(body)
 		})
 		const data = await res.json();
-
 		if (isReg) {
 			if (data?._id) {
 				setIsReg(false);
@@ -68,7 +67,7 @@ const Modal = ({
 	}
 
 	return <div className="modal-wrapper" style={st}>
-		<div className="modal">
+		<div className="modal__custom">
 			<button 
 				className="modal-close" 
 				onClick={(e) => setIsActive(false)}

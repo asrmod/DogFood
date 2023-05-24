@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
     const navigate = useNavigate();
     const [name, setName] = useState("");
-    const [link, setLink] = useState("https://beolin.club/uploads/posts/2022-07/1657851760_12-beolin-club-p-risunok-kostochki-karandashom-krasivo-19.png");
+    const [link, setLink] = useState("https://beolin.club/uploads/posts/2022-07/1657851760_12-beolin-club-p-risunok-kostochki-karandashom-krasivo-19.png"); // pictures
     const [price, setPrice] = useState(999);
-    const [cnt, setCnt] = useState(20);
+    const [cnt, setCnt] = useState(20); 
     const [description, setDescription] = useState("Скоро здесь будет текст...");
     const [discount, setDiscount] = useState(0);
     const [wight, setWight] = useState("0 г");
@@ -65,6 +65,7 @@ const AddProduct = () => {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 if (!data.err && !data.error) {
                     clearForm();
                     navigate(`/product/${data._id}`)

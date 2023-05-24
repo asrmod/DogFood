@@ -1,9 +1,10 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, createContext} from "react";
 import {Routes, Route} from "react-router-dom";
+import Ctx from "./ctx"
 
 // Подключаем компоненты
 import Modal from "./components/Modal";
-import {Header, Footer} from "./components/General";
+import {Header, Footer} from "./components/General"; // index.jsx
 
 // Подключаем странички
 import Home from "./pages/Home";
@@ -12,6 +13,7 @@ import OldPage from "./pages/Old";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import AddProduct from "./pages/AddProduct";
+import Favorites from "./pages/Favorites";
 
 const App = () => {
     const [user, setUser] = useState(localStorage.getItem("user12"));
@@ -21,7 +23,6 @@ const App = () => {
     const [goods, setGoods] = useState(baseData);
     const [searchResult, setSearchResult] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
-
 
     useEffect(() => {
         if (user) {
@@ -36,7 +37,8 @@ const App = () => {
     }, [user])
 
     useEffect(() => {
-         if (token) {
+        console.log("token", token);
+        if (token) {
             fetch("https://api.react-learning.ru/products", {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -44,44 +46,55 @@ const App = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
                     setBaseData(data.products);
                 })
         }
     }, [token])
 
     useEffect(() => {
-        setGoods(baseData)
     }, [baseData])
+
     return (
-        <>
-            <Header 
-                user={user} 
-                upd={setUser} 
-                searchArr={baseData}
-                setGoods={setGoods} 
-                setSearchResult={setSearchResult}
-                setModalOpen={setModalOpen}
-            />
+        <Ctx.Provider value={{
+            searchResult,
+            setSearchResult,
+            setBaseData,
+            baseData,
+            goods,
+            setGoods,
+            userId,
+            token
+        }}>
+
+                <Header
+                    user={user}
+                    upd={setUser}
+                    searchArr={baseData}
+                    setGoods={setGoods}
+                    setModalOpen={setModalOpen}
+                />
+
             <main>
                 <Routes>
                     <Route path="/" element={<Home user={user} setActive={setModalOpen}/>}/>
                     <Route path="/catalog" element={
                         <Catalog 
                             goods={goods}
-                            setBaseData={setBaseData}
                             userId={userId}
                         />
                     }/>
                     <Route path="/old" element={
-                        <OldPage 
-                            searchText={searchResult}
+                        <OldPage
                             goods={goods}
                         />
                     }/>
                     <Route path="/profile" element={
                         <Profile user={user} setUser={setUser}/>}
                     />
+                    <Route path="/favorites" element={
+                        <Favorites />}
+                    />
+
                     <Route path="/product/:id" element={<Product />}/>
                     <Route path="/add/product" element={<AddProduct/>}/>
                 </Routes>
@@ -92,7 +105,7 @@ const App = () => {
                 setIsActive={setModalOpen}
                 setUser={setUser}
             />
-        </>
+        </Ctx.Provider>
     )
 }
 
